@@ -1,51 +1,97 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Transactions;
+using System;
 
-namespace FinanceTracker
+namespace Finance
 {
-    public interface IFinance
+    interface IFinance
     {
-        void AddTransaction();
-        void ViewTransactions();
-        void CategorizeTransaction();
+        abstract void AddTransaction(string description, decimal amount, string category);
+        abstract void ViewTransactions();
+        abstract void CategorizeTransaction();
         void Summary();
-
     }
     class FinanceTracker : IFinance
     {
         //list of transactions
         public List<Transaction> transactions = new List <Transaction> ();
 
-        public void AddTransaction()
+        private decimal income;
+        private decimal expenses;
+        public decimal income_
         {
-            Console.Write("Description: ");
-            string? description = Console.ReadLine();
+            get {return income;}
+            set {income = value;}
+        }
+        public decimal expenses_
+        {
+            get {return expenses;}
+            set {expenses = value;}
+        }
 
-            Console.Write("Amount: ");
-            decimal amount;
-            while (!decimal.TryParse(Console.ReadLine(), out amount))
-            {
-                Console.Write("Please enter a decimal: ");
-            }
 
-            Console.Write("Category: ");
-            string? category = Console.ReadLine();
+        public void AddTransaction(string description, decimal amount, string category)
+        {
+            // creates a new transaction
+            Transaction newTransaction = new Transaction(description, amount, category);
+            // adds transaction to the transactions list
+            transactions.Add(newTransaction);
         }
 
         public void ViewTransactions()
         {
-
+            foreach (var transaction in transactions)
+            {
+                Console.WriteLine($"Category: {transaction.GetCategory()}");
+                Console.WriteLine($"Description: {transaction.GetDescription()}");
+                Console.WriteLine($"Amount: {transaction.GetAmount()}");
+                Console.WriteLine($"Date: {transaction.GetDate()}");
+                Console.WriteLine($"Transaction ID: {transaction.GetID()}");
+                Console.WriteLine("");
+            }
         }
 
         public void CategorizeTransaction()
         {
+            //group transactions with the same category
+            var transactionsByCategory = transactions.GroupBy(pair => pair.GetCategory());
+            //for each group
+            foreach (var groupOfTransactions in transactionsByCategory)
+            {
+                // get the current category
+                string category = groupOfTransactions.Key;
+                // make a list of the group of the current category
+                List<Transaction> transactionsInCategory = groupOfTransactions.ToList();
 
+                Console.WriteLine("");
+                Console.WriteLine("_______________________________");
+                Console.WriteLine($"Category: {category}");
+                Console.WriteLine("");
+                foreach (var transaction in transactionsInCategory)
+                {
+                    Console.WriteLine($"Description: {transaction.GetDescription()}");
+                    Console.WriteLine($"Amount: {transaction.GetAmount()}");
+                    Console.WriteLine($"Date: {transaction.GetDate()}");
+                    Console.WriteLine($"Transaction ID: {transaction.GetID()}");
+                    Console.WriteLine("");
+                }
+            }
         }
 
         public void Summary()
         {
-
+            foreach (var transaction in transactions)
+            {
+                if (transaction.GetAmount() > 0)
+                {
+                    income += transaction.GetAmount();
+                }
+                else
+                {
+                    expenses -= transaction.GetAmount();
+                }
+            }
         }
     }
 }

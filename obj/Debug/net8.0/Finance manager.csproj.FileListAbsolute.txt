@@ -12,3 +12,4 @@ C:\Users\Lenovo\Downloads\Advanced OOP\homework\Finance manager\obj\Debug\net8.0
 C:\Users\Lenovo\Downloads\Advanced OOP\homework\Finance manager\obj\Debug\net8.0\Finance manager.pdb
 C:\Users\Lenovo\Downloads\Advanced OOP\homework\Finance manager\obj\Debug\net8.0\Finance manager.genruntimeconfig.cache
 C:\Users\Lenovo\Downloads\Advanced OOP\homework\Finance manager\obj\Debug\net8.0\ref\Finance manager.dll
+C:\Users\Lenovo\Downloads\Advanced OOP\homework\Finance manager\obj\Debug\net8.0\Finance manager.sourcelink.json

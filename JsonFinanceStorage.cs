@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace FinanceStorage
+namespace IFinance
 {
     public interface IFinanceStorage
     {
