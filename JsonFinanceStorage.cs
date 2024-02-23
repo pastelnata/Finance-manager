@@ -1,22 +1,53 @@
 using System.Text.Json;
+using Newtonsoft.Json;
 
-namespace IFinance
+namespace Finance
 {
-    public interface IFinanceStorage
+    interface IFinanceStorage
     {
-        void SaveTransactionData();
-        void LoadTransactionData();
+        abstract void SaveTransactionData(Transaction transaction);
+        abstract List<Transaction> LoadTransactionData();
     }
     class JsonFinanceStorage : IFinanceStorage
     {
-        public void SaveTransactionData()
+
+        List<Transaction> transactions = FinanceTracker.transactions;
+        public void SaveTransactionData(Transaction transaction)
         {
-            // string transactionsJson = JsonSerializer.Serialize(transactions);
+            // Create a new transaction object
+            var newTransaction = new Transaction(
+                transaction.Description,
+                transaction.Amount,
+                transaction.Category
+            );
+
+            transactions.Add(newTransaction);
+
+            // Serialize the entire list of transactions
+            string jsonTransactions = JsonConvert.SerializeObject(transactions, Formatting.Indented);
+
+            // Write the serialized JSON array to the file
+            File.WriteAllText("transactions.json", jsonTransactions);
         }
 
-        public void LoadTransactionData()
+        public List<Transaction> LoadTransactionData()
         {
-            //deserialization
+            try
+            {
+                string transactionsJson = File.ReadAllText("transactions.json");
+                var loadedTransactions = JsonConvert.DeserializeObject<List<Transaction>>(transactionsJson);
+                if (loadedTransactions != null)
+                {
+                    transactions = loadedTransactions;
+                    return transactions;
+                }
+                return new List<Transaction>();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Error deserializing JSON file.");
+                throw;
+            }
         }
     }
 }

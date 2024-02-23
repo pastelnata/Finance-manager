@@ -10,12 +10,13 @@ namespace Finance
         abstract void AddTransaction(string description, decimal amount, string category);
         abstract void ViewTransactions();
         abstract void CategorizeTransaction();
-        void Summary();
+        abstract void Summary();
     }
     class FinanceTracker : IFinance
     {
         //list of transactions
-        public List<Transaction> transactions = new List <Transaction> ();
+        public static List<Transaction> transactions = new List <Transaction> ();
+        public JsonFinanceStorage JsonStorage = new JsonFinanceStorage();
 
         private decimal income;
         private decimal expenses;
@@ -35,19 +36,20 @@ namespace Finance
         {
             // creates a new transaction
             Transaction newTransaction = new Transaction(description, amount, category);
-            // adds transaction to the transactions list
-            transactions.Add(newTransaction);
+            Console.WriteLine($"New Transaction: Description: {newTransaction.Description}, Amount: {newTransaction.Amount}, Category: {newTransaction.Category}");
+            // saves transaction to 
+            JsonStorage.SaveTransactionData(newTransaction);
         }
 
         public void ViewTransactions()
         {
             foreach (var transaction in transactions)
             {
-                Console.WriteLine($"Category: {transaction.GetCategory()}");
-                Console.WriteLine($"Description: {transaction.GetDescription()}");
-                Console.WriteLine($"Amount: {transaction.GetAmount()}");
-                Console.WriteLine($"Date: {transaction.GetDate()}");
-                Console.WriteLine($"Transaction ID: {transaction.GetID()}");
+                Console.WriteLine($"Category: {transaction.Category}");
+                Console.WriteLine($"Description: {transaction.Description}");
+                Console.WriteLine($"Amount: {transaction.Amount}");
+                Console.WriteLine($"Date: {transaction.Date}");
+                Console.WriteLine($"Transaction ID: {transaction.ID}");
                 Console.WriteLine("");
             }
         }
@@ -55,7 +57,7 @@ namespace Finance
         public void CategorizeTransaction()
         {
             //group transactions with the same category
-            var transactionsByCategory = transactions.GroupBy(pair => pair.GetCategory());
+            var transactionsByCategory = transactions.GroupBy(pair => pair.Category);
             //for each group
             foreach (var groupOfTransactions in transactionsByCategory)
             {
@@ -70,10 +72,10 @@ namespace Finance
                 Console.WriteLine("");
                 foreach (var transaction in transactionsInCategory)
                 {
-                    Console.WriteLine($"Description: {transaction.GetDescription()}");
-                    Console.WriteLine($"Amount: {transaction.GetAmount()}");
-                    Console.WriteLine($"Date: {transaction.GetDate()}");
-                    Console.WriteLine($"Transaction ID: {transaction.GetID()}");
+                    Console.WriteLine($"Description: {transaction.Description}");
+                    Console.WriteLine($"Amount: {transaction.Amount}");
+                    Console.WriteLine($"Date: {transaction.Date}");
+                    Console.WriteLine($"Transaction ID: {transaction.ID}");
                     Console.WriteLine("");
                 }
             }
@@ -83,13 +85,13 @@ namespace Finance
         {
             foreach (var transaction in transactions)
             {
-                if (transaction.GetAmount() > 0)
+                if (transaction.Amount > 0)
                 {
-                    income += transaction.GetAmount();
+                    income += transaction.Amount;
                 }
                 else
                 {
-                    expenses -= transaction.GetAmount();
+                    expenses -= transaction.Amount;
                 }
             }
         }

@@ -6,11 +6,21 @@ namespace FinanceProgram
     {
         static void Main()
         {
-            FinanceTracker FinanceTracker1 = new FinanceTracker
+            List<Transaction> transactions = new List <Transaction> ();
+
+            FinanceTracker financeTracker = new FinanceTracker();
+            
+            if (File.Exists("transactions.json"))
             {
-                income_ = 0,
-                expenses_ = 0
-            };
+                financeTracker.JsonStorage.LoadTransactionData();
+
+            }
+            else
+            {
+                File.WriteAllText("transactions.json", string.Empty);
+                financeTracker.income_ = 0;
+                financeTracker.expenses_ = 0; 
+            }
 
             bool applicationRunning = true;
 
@@ -26,7 +36,7 @@ namespace FinanceProgram
 
                 switch (userInput)
                 {
-                    case "1":
+                    case "1":   
                     // ADD TRANSACTION
                     Console.WriteLine("");
                     AddTransactionHandler();
@@ -35,7 +45,7 @@ namespace FinanceProgram
                     case "2":
                     // VIEW TRANSACTIONS
                     Console.WriteLine("");
-                    FinanceTracker1.ViewTransactions();
+                    financeTracker.ViewTransactions();
                     ViewTransactionHandler();
                     break;
 
@@ -78,7 +88,7 @@ namespace FinanceProgram
                     Console.Write("Please enter a decimal: ");
                 }
 
-                FinanceTracker1.AddTransaction(description, amount, category);
+                financeTracker.AddTransaction(description, amount, category);
                 Console.WriteLine("Transaction added successfully.");
                 Console.WriteLine("");
             }
@@ -97,21 +107,23 @@ namespace FinanceProgram
                 }
                 else
                 {
-                    FinanceTracker1.CategorizeTransaction();
+                    financeTracker.CategorizeTransaction();
                 }
             }
 
             void FinancialSummariesHandler()
             {
-                FinanceTracker1.Summary();
-                Console.WriteLine($"Total Income: {FinanceTracker1.income_}");
-                Console.WriteLine($"Total Expenses: {FinanceTracker1.expenses_}");
-                Console.WriteLine($"Total Balance:{FinanceTracker1.income_ - FinanceTracker1.expenses_} ");
+                financeTracker.Summary();
+                Console.WriteLine("");
+                Console.WriteLine($"Total Income: {financeTracker.income_}");
+                Console.WriteLine($"Total Expenses: {financeTracker.expenses_}");
+                Console.WriteLine($"Total Balance:{financeTracker.income_ - financeTracker.expenses_} ");
+                Console.WriteLine("");
             }
 
 
             /*------------------------------------------------------------------------------
-                UTIL - To b«avoid code repetition
+                UTIL - To avoid code repetition
             -------------------------------------------------------------------------------*/
 
 

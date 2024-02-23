@@ -1,43 +1,37 @@
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 namespace Finance
 {
     class Transaction
     {
-        private string description {get;}
-        private decimal amount {get;}
-        private string category {get;}
-        private Guid ID {get; set;} = Guid.NewGuid();
-        private DateTime date = DateTime.UtcNow;
+        
+        internal string Description {get; set;}
+        internal decimal Amount {get; set;}
+        internal string Category {get; set;}
+        internal Guid ID {get; set;} = Guid.NewGuid();
+        internal DateTime Date {get; set;} = DateTime.UtcNow;
 
         public Transaction(string _description, decimal _amount, string _category)
         {
-            description = _description;
-            amount = _amount;
-            category = _category;
+            Description = _description;
+            Amount = _amount;
+            Category = _category;
         }
 
-        internal string GetDescription()
-        {
-            return description;
-        }
+        [JsonProperty, JsonPropertyName("Description")]
+        public string GetDescription{get {return Description; }}
 
-        internal decimal GetAmount()
-        {
-            return amount;
-        }
+        [JsonProperty, JsonPropertyName("Amount")]
+        public decimal GetAmount{get {return Amount; }}
 
-        internal string GetCategory()
-        {
-            return category;
-        }
+        [JsonProperty, JsonPropertyName("Category")]
+        public string GetCategory{get {return Category; }}
 
-        internal Guid GetID()
-        {
-            return ID;
-        }
-
-        internal DateTime GetDate()
-        {
-            return date;
-        }
+        [JsonProperty, JsonPropertyName("Date")]
+        public DateTime GetDate{get {return Date; }}
+        
+        [JsonProperty, JsonPropertyName("ID")]
+        public Guid GetID{get {return ID; }}
     }
 }
