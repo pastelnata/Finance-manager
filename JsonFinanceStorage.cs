@@ -1,4 +1,5 @@
 using System.Text.Json;
+using FinanceProgram;
 using Newtonsoft.Json;
 
 namespace Finance
@@ -10,21 +11,19 @@ namespace Finance
     }
     class JsonFinanceStorage : IFinanceStorage
     {
-
-        List<Transaction> transactions = FinanceTracker.transactions;
         public void SaveTransactionData(Transaction transaction)
         {
             // Create a new transaction object
             var newTransaction = new Transaction(
-                transaction.Description,
-                transaction.Amount,
-                transaction.Category
+                transaction.GetDescription,
+                transaction.GetAmount,
+                transaction.GetCategory
             );
 
-            transactions.Add(newTransaction);
+            Program.transactions.Add(newTransaction);
 
             // Serialize the entire list of transactions
-            string jsonTransactions = JsonConvert.SerializeObject(transactions, Formatting.Indented);
+            string jsonTransactions = JsonConvert.SerializeObject(Program.transactions, Formatting.Indented);
 
             // Write the serialized JSON array to the file
             File.WriteAllText("transactions.json", jsonTransactions);
@@ -38,10 +37,9 @@ namespace Finance
                 var loadedTransactions = JsonConvert.DeserializeObject<List<Transaction>>(transactionsJson);
                 if (loadedTransactions != null)
                 {
-                    transactions = loadedTransactions;
-                    return transactions;
+                    return loadedTransactions; 
                 }
-                return new List<Transaction>();
+                return loadedTransactions = new List<Transaction>();
             }
             catch (Exception)
             {

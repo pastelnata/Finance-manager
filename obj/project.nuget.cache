@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KVfsRa4/yFpBpb1J60hyJlQPJLq9RvEW89E6ZRED/O8yCTj9eYOoHGGLu9veFaB/AFZIxVyqcGrZxR5KDlrmOg==",
+  "dgSpecHash": "fH/o+/chqS7md52Pu/QqqOdN2dhicaZTNz7zsGJ7a6lFAZDQANfm5CO9yPu/Mm5rHAX8Z9iswJflX42mO3X/jw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lenovo\\Downloads\\Advanced OOP\\homework\\Finance manager\\Finance manager.csproj",
+  "projectFilePath": "C:\\Users\\Lenovo\\Downloads\\Finance-manager\\Finance manager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],

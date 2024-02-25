@@ -4,15 +4,16 @@ namespace FinanceProgram
 {
     class Program
     {
+        public static List<Transaction> transactions = new List <Transaction> ();
+        public static FinanceTracker financeTracker = new FinanceTracker();
+        public static JsonFinanceStorage JsonStorage = new JsonFinanceStorage();
         static void Main()
         {
-            List<Transaction> transactions = new List <Transaction> ();
 
-            FinanceTracker financeTracker = new FinanceTracker();
             
             if (File.Exists("transactions.json"))
             {
-                financeTracker.JsonStorage.LoadTransactionData();
+                transactions = JsonStorage.LoadTransactionData();
 
             }
             else

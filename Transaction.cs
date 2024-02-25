@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace Finance
@@ -6,11 +5,11 @@ namespace Finance
     class Transaction
     {
         
-        internal string Description {get; set;}
-        internal decimal Amount {get; set;}
-        internal string Category {get; set;}
-        internal Guid ID {get; set;} = Guid.NewGuid();
-        internal DateTime Date {get; set;} = DateTime.UtcNow;
+        private string Description;
+        private decimal Amount;
+        private string Category;
+        private Guid ID = Guid.NewGuid();
+        private DateTime Date = DateTime.UtcNow;
 
         public Transaction(string _description, decimal _amount, string _category)
         {
@@ -19,19 +18,39 @@ namespace Finance
             Category = _category;
         }
 
-        [JsonProperty, JsonPropertyName("Description")]
-        public string GetDescription{get {return Description; }}
+        [JsonProperty(nameof(GetDescription))]
+        public string GetDescription
+        {
+            get {return Description; }
+            set {Description = value; }
+        }
 
-        [JsonProperty, JsonPropertyName("Amount")]
-        public decimal GetAmount{get {return Amount; }}
+        [JsonProperty(nameof(GetAmount))]
+        public decimal GetAmount
+        {
+            get {return Amount; }
+            set {Amount = value; }
+        }
 
-        [JsonProperty, JsonPropertyName("Category")]
-        public string GetCategory{get {return Category; }}
+        [JsonProperty(nameof(GetCategory))]
+        public string GetCategory
+        {
+            get {return Category; }
+            set {Category = value; }
+        }
 
-        [JsonProperty, JsonPropertyName("Date")]
-        public DateTime GetDate{get {return Date; }}
-        
-        [JsonProperty, JsonPropertyName("ID")]
-        public Guid GetID{get {return ID; }}
+        [JsonProperty(nameof(GetID))]
+        public Guid GetID
+        {
+            get {return ID; }
+            set {ID = value; }
+        }
+
+        [JsonProperty(nameof(GetDate))]
+        public DateTime GetDate
+        {
+            get {return Date; }
+            set {Date = value; }
+        }
     }
 }

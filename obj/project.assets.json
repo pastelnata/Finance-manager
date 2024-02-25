@@ -60,11 +60,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\Downloads\\Advanced OOP\\homework\\Finance manager\\Finance manager.csproj",
+      "projectUniqueName": "C:\\Users\\Lenovo\\Downloads\\Finance-manager\\Finance manager.csproj",
       "projectName": "Finance manager",
-      "projectPath": "C:\\Users\\Lenovo\\Downloads\\Advanced OOP\\homework\\Finance manager\\Finance manager.csproj",
+      "projectPath": "C:\\Users\\Lenovo\\Downloads\\Finance-manager\\Finance manager.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\Downloads\\Advanced OOP\\homework\\Finance manager\\obj\\",
+      "outputPath": "C:\\Users\\Lenovo\\Downloads\\Finance-manager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
