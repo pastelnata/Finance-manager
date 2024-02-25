@@ -9,12 +9,9 @@ namespace FinanceProgram
         public static JsonFinanceStorage JsonStorage = new JsonFinanceStorage();
         static void Main()
         {
-
-            
             if (File.Exists("transactions.json"))
             {
                 transactions = JsonStorage.LoadTransactionData();
-
             }
             else
             {
@@ -65,78 +62,82 @@ namespace FinanceProgram
                     break;
                 }
             }
+        }
 
 
-            /*---------------------------------------------------------------------------
-                Handles user commands
-            ----------------------------------------------------------------------------*/
+        /*---------------------------------------------------------------------------
+            Handles user commands
+        ----------------------------------------------------------------------------*/
 
 
-            void AddTransactionHandler()
+        private static void AddTransactionHandler()
+        {
+            Console.Write("Type 'B' to return");
+            Console.Write("Category: ");
+            string? category = Console.ReadLine();
+            category = InputValidation(category, "a category");
+
+            Console.Write("Type 'B' to return");
+            Console.Write("Description: ");
+            string? description = Console.ReadLine();
+            description = InputValidation(description, "a description");
+            
+            Console.Write("Type 'B' to return");
+            Console.Write("Amount: ");
+            decimal amount;
+            while (!decimal.TryParse(Console.ReadLine(), out amount))
             {
-                Console.Write("Category: ");
-                string? category = Console.ReadLine();
-                category = InputValidation(category, "a category");
-
-                Console.Write("Description: ");
-                string? description = Console.ReadLine();
-                description = InputValidation(description, "a description");
-                
-                Console.Write("Amount: ");
-                decimal amount;
-                while (!decimal.TryParse(Console.ReadLine(), out amount))
-                {
-                    Console.Write("Please enter a decimal: ");
-                }
-
-                financeTracker.AddTransaction(description, amount, category);
-                Console.WriteLine("Transaction added successfully.");
-                Console.WriteLine("");
+                Console.Write("Please enter a decimal: ");
             }
 
-            void ViewTransactionHandler()
-            {
-                Console.WriteLine("Type 'C' to view transactions by category.");
-                Console.WriteLine("Type 'B' to go back.");
-                Console.Write("> ");
-                string? userInput = Console.ReadLine();
-                InputValidation(userInput, "an option");
+            financeTracker.AddTransaction(description, amount, category);
+            Console.WriteLine("Transaction added successfully.");
+            Console.WriteLine("");
+        }
 
-                if (userInput == "B")
-                {
-                    return;
-                }
-                else
-                {
-                    financeTracker.CategorizeTransaction();
-                }
+        private static void ViewTransactionHandler()
+        {
+            Console.WriteLine("Type 'C' to view transactions by category.");
+            Console.WriteLine("Type 'B' to go back.");
+            Console.Write("> ");
+            string? userInput = Console.ReadLine();
+            InputValidation(userInput, "an option");
+
+            if (userInput == "B")
+            {
+                return;
             }
-
-            void FinancialSummariesHandler()
+            if (userInput == "C")
             {
-                financeTracker.Summary();
-                Console.WriteLine("");
-                Console.WriteLine($"Total Income: {financeTracker.income_}");
-                Console.WriteLine($"Total Expenses: {financeTracker.expenses_}");
-                Console.WriteLine($"Total Balance:{financeTracker.income_ - financeTracker.expenses_} ");
-                Console.WriteLine("");
+                financeTracker.CategorizeTransaction();
             }
+            Console.WriteLine("Please type an option.");
+        }
+
+        private static void FinancialSummariesHandler()
+        {
+            financeTracker.Summary();
+            Console.WriteLine("");
+            Console.WriteLine($"Total Income: {financeTracker.income_}");
+            Console.WriteLine($"Total Expenses: {financeTracker.expenses_}");
+            Console.WriteLine($"Total Balance:{financeTracker.income_ - financeTracker.expenses_} ");
+            Console.WriteLine("");
+        }
 
 
-            /*------------------------------------------------------------------------------
-                UTIL - To avoid code repetition
-            -------------------------------------------------------------------------------*/
+        /*------------------------------------------------------------------------------
+            UTIL - To avoid code repetition
+        -------------------------------------------------------------------------------*/
 
 
-            static string InputValidation(string? userInput, string option)
+        private static string InputValidation(string? userInput, string option)
+        {
+            while (string.IsNullOrEmpty(userInput))
             {
-                while (string.IsNullOrEmpty(userInput))
-                {
-                    Console.Write($"Invalid Input. Please enter {option}: ");
-                    userInput = Console.ReadLine();
-                }
-                return userInput;
-            }   
+                Console.Write($"Invalid Input. Please enter {option}: ");
+                userInput = Console.ReadLine();
+            }
+            return userInput;
         }
     }
 }
