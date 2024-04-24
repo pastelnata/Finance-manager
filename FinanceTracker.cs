@@ -55,7 +55,7 @@ namespace Finance
         {
             //group transactions with the same category
             var transactionsByCategory = Program.transactions.GroupBy(pair => pair.GetCategory);
-            //for each group
+            // for each group
             foreach (var groupOfTransactions in transactionsByCategory)
             {
                 // get the current category
