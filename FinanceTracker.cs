@@ -33,7 +33,7 @@ namespace Finance
         {
             // creates a new transaction
             Transaction newTransaction = new Transaction(description, amount, category);
-            Console.WriteLine($"New Transaction: Description: {newTransaction.GetDescription}, Amount: {newTransaction.GetAmount}, Category: {newTransaction.GetCategory}");
+            Console.WriteLine($"New TransaAAAction: Description: {newTransaction.GetDescription}, Amount: {newTransaction.GetAmount}, Category: {newTransaction.GetCategory}");
             // saves transaction to 
             Program.JsonStorage.SaveTransactionData(newTransaction);
         }
